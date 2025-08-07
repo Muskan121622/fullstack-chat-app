@@ -14,9 +14,10 @@ import { useEffect } from "react";
 import { Loader } from "lucide-react";
 import { Toaster } from "react-hot-toast";
 
+import { useThemeStore1 } from '../src/theme';
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
-  const { theme } = useThemeStore();
+  const { theme } = useThemeStore1();
 
   console.log({ onlineUsers });
 
@@ -25,7 +26,14 @@ const App = () => {
   }, [checkAuth]);
 
   console.log({ authUser });
-
+  useEffect(() => {
+    const html = document.documentElement;
+    if (theme === "dark") {
+      html.classList.add("dark");
+    } else {
+      html.classList.remove("dark");
+    }
+  }, [theme]);
   if (isCheckingAuth && !authUser)
     return (
       <div className="flex items-center justify-center h-screen">
@@ -34,7 +42,7 @@ const App = () => {
     );
 
   return (
-    <div data-theme={theme}>
+    <div className="theme-transition bg-background text-foreground min-h-screen">
       <Navbar />
 
       <Routes>

@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
-import { LogOut, MessageSquare, Settings, User } from "lucide-react";
-
+import { LogOut, MessageSquare, Settings, User ,Moon, Sun} from "lucide-react";
+import { useThemeStore1 } from '../theme';
 const Navbar = () => {
   const { logout, authUser } = useAuthStore();
-
+   const { theme, toggleTheme } = useThemeStore1();
   return (
     <header
       className="bg-base-100 border-b border-base-300 fixed w-full top-0 z-40 
@@ -22,6 +22,17 @@ const Navbar = () => {
           </div>
 
           <div className="flex items-center gap-2">
+              {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              className="btn btn-sm gap-2"
+              title="Toggle Theme"
+            >
+              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              <span className="hidden sm:inline">
+                {theme === "dark" ? "Light" : "Dark"} Mode
+              </span>
+            </button>
             <Link
               to={"/settings"}
               className={`
